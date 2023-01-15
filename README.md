@@ -1,6 +1,6 @@
 # Oranje Bootjes
 
-Projekt: Oranje Bootjes - Bootsreiseführer für Nordholland
+Online Bootsreiseführer für Nordholland
 
 Dieses Repository enthält den Code eines Gruppenprojekts, bei dem wir eine Software nach Kundenanforderungen entwickelt haben. Unsere Professoren traten bei diesem Projekt als Kunden auf. Ziel des Projekts war es, eine Webseite zu erstellen, mit der Bootsfahrer in Nordholland ihren Bootssurlaub angenehmer gestalten können.
 
