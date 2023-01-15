@@ -1,0 +1,70 @@
+// Change Bootstrap default variables here and add your own variables
+
+// Nordholland-Colors Variables
+$nordholland-light: #eeeeee;
+$nordholland-light-orange: #FFC170;
+$nordholland-orange: #e19c41;
+$nordholland-light-blue: #00A5e0;
+$nordholland-dark-blue: #153243;
+$nordholland-dark: #0d1321;
+$nordholland-green: #09BC8A;
+$nordholland-red: #D81159;
+
+// Nordholland-Navbar Variables
+$nordholland-nav-height: 70px;
+
+// Color Overrides
+$primary:       $nordholland-light-blue;
+$secondary:     $nordholland-dark-blue;
+$success:       $nordholland-green;
+$info:          $nordholland-orange;
+$warning:       $nordholland-light-orange;
+$danger:        $nordholland-red;
+$light:         $nordholland-light;
+$dark:          $nordholland-dark;
+
+// Import Bootstrap
+@import "../../../../../node_modules/bootstrap/scss/bootstrap";
+
+// Import Bootstrap Icons
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
+
+// Add custom css which will overwrite Bootstrap here
+html.map-site, body.map-site{
+  height: 100%;
+  overflow: hidden;
+  width: 100%;
+}
+
+body.map-site {
+  /* height of .navbar, customize with @navbar-height variable */
+  padding-bottom: $nordholland-nav-height;
+}
+
+.navbar {
+  min-height: $nordholland-nav-height;
+}
+.nordholland-nav{
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100vw;
+  z-index: 1;
+}
+#map {
+  height: 100%;
+  width: auto;
+  z-index: 0;
+}
+
+@include media-breakpoint-up(md){
+  body.map-site{
+    padding-bottom: 0;
+    padding-top: $nordholland-nav-height;
+  }
+  .nordholland-nav{
+    position: fixed;
+    top: 0;
+    bottom: auto;
+  }
+}

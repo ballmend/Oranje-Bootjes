@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en" class="map-site">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Oranje Bootjes</title>
+    <!-- Our CSS stylesheet with Bootstrap -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- leaflet css -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+          crossorigin=""/>
+</head>
+<body class="map-site">
+    <!-- Site Navigation -->
+    <!-- At breakpoint md and smaller the navbar collapses and is located at the bottom of the page
+         On larger screens the navbar is expanded and is located at the top of the page -->
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow nordholland-nav">
+        <div class="container-fluid">
+            <a class="navbar-brand h1 text-info fw-bold" href="#">Oranje Bootjes</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
+                    aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item mx-2">
+                        <button class="btn btn-primary w-100 nav-link text-white text-center px-3 mt-2 mt-md-0" type="button" id="navNordhollandButton" title="Auf Nordholland zentrieren!">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="#ffffff"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 6l-1-2H5v17h2v-7h5l1 2h7V6h-6zm4 8h-4l-1-2H7V6h5l1 2h5v6z"/></svg>
+                        </button>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <button class="btn btn-primary w-100 nav-link text-white text-center px-3 mt-2 mt-md-0" type="button" id="navLocalizationButton" title="Auf meine Position zentrieren!">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 0 24 24" width="20px" fill="#ffffff"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>
+                        </button>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <button class="btn btn-primary w-100 nav-link text-white text-center px-3 mt-2 mt-md-0" type="button" id="navRouteButton" title="Route erstellen!">
+                            <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 20 20" height="20px" viewBox="0 0 20 20" width="20px" fill="#ffffff"><g><rect fill="none" height="20" width="20"/></g><g><g><path d="M15.25,12.13V6c0-1.65-1.35-3-3-3s-3,1.35-3,3v8c0,0.83-0.67,1.5-1.5,1.5s-1.5-0.67-1.5-1.5V7.87C7.26,7.55,8,6.62,8,5.5 C8,4.12,6.88,3,5.5,3S3,4.12,3,5.5c0,1.12,0.74,2.05,1.75,2.37V14c0,1.65,1.35,3,3,3s3-1.35,3-3V6c0-0.83,0.67-1.5,1.5-1.5 s1.5,0.67,1.5,1.5v6.13C12.74,12.45,12,13.38,12,14.5c0,1.38,1.12,2.5,2.5,2.5s2.5-1.12,2.5-2.5C17,13.38,16.26,12.45,15.25,12.13 z"/></g></g></svg>
+                        </button>
+                    </li>
+                    <li class="nav-item dropdown mx-2">
+                        <button class="btn btn-primary w-100 dropdown-toggle nav-link text-white text-center px-3 mt-2 mt-md-0" type="button" id="navDropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" title="POIs nach Typen filtern!"><i class="bi bi-funnel"></i></button>
+                        <ul class="dropdown-menu" aria-labelledby="navDropdownMenuButton">
+                            <li><a class="dropdown-item" href="#">Filter 1</a></li>
+                            <li><a class="dropdown-item" href="#">Filter 2</a></li>
+                            <li><a class="dropdown-item" href="#">Filter 3</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <button class="btn btn-primary w-100 nav-link text-white text-center px-3 mt-2 mt-md-0" type="button" id="navCatalogModalButton" title="Katalog mit POIs in deiner Nähe!"><i class="bi bi-list-stars"></i></button>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a class="btn btn-primary w-100 nav-link text-white text-center px-3 mt-2 mt-md-0" href="sites/about.html" title="Über Oranje Bootjes"><i class="bi bi-question-lg"></i></a>
+                    </li>
+                </ul>
+                <form class="d-flex mx-2 mt-2 mt-md-0">
+                    <input class="form-control me-2" type="search" placeholder="Suchen . . ." aria-label="Search">
+                    <button class="btn btn-primary text-white" type="submit"><i class="bi bi-search"></i></button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <!-- Modal -->
+    <div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-title"></h5>
+                    <button type="button" class="close" id="modal-close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+
+                <div class="modal-body" style=" background-size: cover; " id="modal-body">
+
+                </div>
+
+                <div class="modal-footer justify-content-center">
+
+                    <nav aria-label="...">
+                        <ul class="pagination justify-content-center" id="modal-page">
+
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Map -->
+    <div id="map"></div>
+
+    <!-- JQuery & Bootstrap JS-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+
+    <!-- leaflet js -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin=""></script>
+
+    <!-- our custom js -->
+    <script>
+        window.setInterval(function(){
+            if (navigator.geolocation) {
+                navigator.geolocation.watchPosition(function (position) {
+                    var latlng = L.latLng(position.coords.latitude, position.coords.longitude);
+                    userPosition.setLatLng(latlng);
+                    userPosition.addTo(map);
+                    if (!initView) {
+                        gotoposition();
+                        initView = true;
+                    }
+                });
+            }
+        }, 200);
+
+
+        //Map für Modal Page -- Key (HintergrundinformationCount start with 0) Value (id of the Hintergrundinformation)
+        var modalPage=new Map();
+        var map = L.map('map');
+
+        //ICON des User Marker
+        var myIcon = L.icon({
+            iconUrl: '/images/boot.png',
+            iconSize: [38, 38],
+        });
+
+        //Position des Nutzers
+        var userPosition =L.marker([50.5, 30.5], {icon: myIcon});
+
+        map.setView([52.6425, 5.05972], 10); //zentriert auf Hoorn
+
+        //Intitialen setzen des views
+        var initView = false;
+
+        //Icons
+        var iconAnchor = L.icon({
+            iconUrl: 'icons/anchor_V3.png.svg',
+            iconSize: [27,27],
+            });
+        var iconTankstation = L.icon({
+            iconUrl: 'icons/gas_station_V3.png',
+            iconSize: [24,24],
+        });
+        var iconRestaurant = L.icon({
+            iconUrl: 'icons/restaurant_V4.png',
+            iconSize:[24,24],
+        })
+        var iconHotel = L.icon({
+            iconUrl: 'icons/outdated/hotel_V2.png',
+            iconSize:[18,25],
+        })
+        var iconSupermarkt = L.icon({
+            iconUrl: 'icons/supermarkt_V5.png',
+            iconSize:[25,22],
+        })
+        var iconPark = L.icon({
+            iconUrl: 'icons/parkingboat_V2.png.svg',
+            iconSize: [26,26],
+        });
+        var iconSlipstelle = L.icon({
+            iconUrl: 'icons/slipstelle_V2.png',
+            iconSize: [24,24],
+        });
+
+        //osm layer
+        var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        })
+
+        //google satellite
+        googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            maxZoom: 20,
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+        });
+
+
+        // Sea Map
+        var OpenSeaMap = L.tileLayer('https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png', {
+            attribution: 'Map data: &copy; <a href="http://www.openseamap.org">OpenSeaMap</a> contributors'
+        });
+
+        osm.addTo(map);
+        //googleSat.addTo(map)
+        //OpenSeaMap.addTo(map)
+
+        // Layer controller
+        var baseMaps = {
+            "OSM": osm,
+            "Google Satellite": googleSat
+        };
+
+        var overlayMaps = {
+            "OpenSeaMap": OpenSeaMap
+        };
+
+        L.control.layers(baseMaps, overlayMaps, {collapsed: false}).addTo(map);
+
+        //Initials User Position setzen
+       setposition();
+
+        //User Position erfragen und Marker neu setzen
+        function setposition(callGoto){
+            if (navigator.geolocation) {
+                navigator.geolocation.watchPosition(function(position) {
+                    var latlng = L.latLng(position.coords.latitude, position.coords.longitude);
+                    userPosition.setLatLng(latlng);
+                    userPosition.addTo(map);
+                    if (!initView){
+                        gotoposition();
+                        initView=true;
+                    }
+                });
+            } else {
+               alert("GPS is deactivated");
+               return false;
+            }
+        }
+
+        function gotoposition(){
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var latlng = L.latLng(position.coords.latitude, position.coords.longitude);
+                    userPosition.setLatLng(latlng);
+                });
+            }
+                    map.setView(userPosition.getLatLng(), 13);
+        }
+
+        //Hintergrundinformationen erfragen
+        function getHintergrundinformation(id) {
+            var x;
+            $.ajax({
+                url: "/Hintergrundinformtaion/"+id,
+                type: 'GET',
+                dataType: "json",
+                async:false,
+                contentType: "application/json",
+                //falls Call erfolgreich
+                success: function (result) {
+                  x=result;
+                },
+                //falls Call nicht funktioniert hat
+                error: function (result) {
+                    alert('Couldnt get any Hintergrundinformation!');
+                }
+            });
+            return x;
+        }
+
+        //Modal Popup for POIs erstellen
+        function modalCardInsert(el){
+            $("#modal-body").css('background-image', 'linear-gradient(0deg, rgba(2,0,36,0.75) 0%, rgba(21,50,67,0.75) 100%), url(' + el.bild + ')');
+            $("#modal-body").empty();
+            $("#modal-body").append('<div class="card bg-white bg-opacity-75">\n' +
+
+                '  <div class="card-body"  id="card-body">\n' +
+                '    <h5 class="card-title" >'+el.heading+'</h5>\n' +
+                '    <p class="card-text" >'+el.inhalt+'</p>\n' +
+
+                '  </div>\n' +
+                '</div>');
+            //Visit Knopf anzeigen wenn Feld gefüpllt
+            if (el.url ){
+                $("#card-body").append( '    <a target="_blank" href="'+el.url+'" class=" btn btn-primary text-white">Website besuchen</a>\n' );
+            }
+        }
+
+        //Modal Popup für POIs befüllen
+        function fillModal(obj) {
+            $("#modal-page").empty();
+
+            let hicount=0;
+            modalPage.clear();
+            obj.forEach(function(hin) {
+            modalPage.set(hicount,hin.id);
+                $("#modal-page").append('  <li class="page-item " id="'+hin.id+'"><a class="page-link " href="#">'+(hicount+1)+'</a></li>');
+                $("#"+hin.id).on('click', {'idx': hicount},function (e) {
+                    modalPage.forEach(function (value, key, map) {
+                        $("#"+value).removeClass('active');
+                    })
+                    modalCardInsert(getHintergrundinformation(modalPage.get(e.data.idx)));
+                    $("#"+modalPage.get(e.data.idx)).addClass('active');
+                });
+                hicount++;
+            });
+            $("#"+modalPage.get(0)).addClass('active');
+            modalCardInsert(getHintergrundinformation(modalPage.get(0)));
+        }
+
+        //POIs aus API callen
+        $.ajax({
+            url: "/POI",
+            type: 'GET',
+            dataType: "json",
+            contentType: "application/json",
+            //falls Call erfolgreich
+            success: function (result) {
+                //Über Ergebnisse itterieren
+                result.forEach(function(obj) {
+                    //Marker hinzufügen with switch/case
+                    var marker = L.marker([obj.breitengrad, obj.langengrad]).addTo(map).bindTooltip(obj.name, {offset: [0, -15], direction: "top"});
+
+                    //Popup für Marker erzeugen
+                    marker.on('click', function(e) {
+                        $("#Modal").modal("toggle");
+                        $("#modal-title").empty();
+                        $("#modal-title").append(obj.name);
+                        map.setView(L.latLng(obj.breitengrad, obj.langengrad), 14);
+                        fillModal(obj.orm_detail);
+                    });
+
+                    //Icons den jeweiligen POIs zuordnen
+                    switch (obj.type) {
+                        /*case 0:
+                            marker.setIcon(iconSehenswürdigkeit)
+                            break;*/
+                        /*case 1:
+                            marker.setIcon(iconVermietung)
+                            break;*/
+                        case 2:
+                            marker.setIcon(iconHotel)
+                            break;
+                        case 3:
+                            marker.setIcon(iconPark)
+                            break;
+                        case 4:
+                            marker.setIcon(iconAnchor)
+                            break;
+                        case 5:
+                            marker.setIcon(iconRestaurant)
+                            break;
+                        case 6:
+                            marker.setIcon(iconSlipstelle)
+                            break;
+                        /*case 7:
+                            marker.setIcon(iconLeuchtturm)
+                            break;*/
+                        case 8:
+                            marker.setIcon(iconTankstation)
+                            break;
+                        case 9:
+                            marker.setIcon(iconSupermarkt)
+                            break;
+                        default:
+                            break;
+                    }
+                });
+            },
+            //falls Call nicht funktioniert hat
+            error: function (result) {
+                alert('Error while getting or displaying POIs');
+            }
+        });
+
+        //Navbar Events
+        $("#navNordhollandButton").click(function (e) {
+            map.setView([52.6425, 5.05972], 10);
+        });
+        $("#navLocalizationButton").click(function (e) {
+            gotoposition();
+        });
+
+        //Modal Event
+        $("#modal-close").click(function (e) {
+            $("#Modal").modal("toggle");
+        });
+
+        //leaflet Events
+        map.on('mouseover', function () {
+            console.log('your mouse is over the map')
+        })
+
+        map.on('mousemove', function (e) {
+           // document.getElementsByClassName('coordinate')[0].innerHTML = 'lat: ' + e.latlng.lat + 'lng: ' + e.latlng.lng;
+           // console.log('lat: ' + e.latlng.lat, 'lng: ' + e.latlng.lng)
+        })
+    </script>
+</body>
+</html>
